@@ -1,86 +1,79 @@
-import mongoose from "mongoose";
+const Mongoose = require('mongoose');
+const Schema = Mongoose.Schema;
 
-const reviewSchema = mongoose.Schema ({
-    name : {
-        type : String,
-        required: true
-    },
-    rating : {
-        type : Number,
-        required: true
-    },
-    comment : {
-        type : String
-    }
-}, {
-    timestamps : true
-})
-
-const productSchema = mongoose.Schema({
-    user : {
-        type : mongoose.Schema.Types.ObjectId,
-        required : true,
-        ref : 'User'
-    },
-    name : {
-        type : String,
-        required : true
-    },
-    author : {
-        type : String,
-        required: true
-    },
-    image : {
-        type : String,
-        required : true
-    },
-    description : {
-        type : String,
-        required : true
-    },
-    publisher : {
-        type : String,
-        required : true
-    },
-    genre : {
-        type : [String],
-        required : true,
-        default : []
-    },
-    format : {
-        type : String,
-        required : true
-    },
-    pages : {
-        type : Number,
-        required : true
-    },
-    price : {
-        type : Number,
-        required : true
-    },
-    countInStock : {
-        type : Number,
-        required : true,
-        default : 0
-    },
-    rating : {
-        type : Number,
-        required : true,
-        default : 0
-    },
-    numReviews : {
-        type : Number,
+const reviewSchema = Schema({
+    user: {
+        type: Mongoose.Schema.Types.ObjectId,
         required: true,
-        default : 0
+        ref: 'user'
     },
-    reviews : {
-        type : [reviewSchema]
+    name: {
+        type: String,
+        required: true
+    },
+    rating: {
+        type: Number,
+        required: true
+    },
+    comment: {
+        type: String,
+        required: true
     }
 }, {
-    timestamps : true
-})
+    timestamps: true
+});
 
-const Product = mongoose.model('Product', productSchema);
+const productSchema = Schema({
+    user: {
+        type: Mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    publisher: {
+        type: String,
+        required: true
+    },
+    genre: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    reviews: [reviewSchema],
+    rating: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    numReviews: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    price: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    countInStock: {
+        type: Number,
+        required: true,
+        default: 0
+    }
+}, {
+    timestamps: true
+});
 
-export default Product ;
+const Product = Mongoose.model('product', productSchema);
+
+module.exports = Product;
